@@ -15,6 +15,13 @@ mkdir cache
 CWD="$(pwd)"
 npm_lcation="$(which npm)"
 BUILD_DIR="$CWD/stratos-ui"
+
+# Add multi-endpoints plugin
+mv components/register-multi-endpoints ${BUILD_DIR}/components
+mv ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.json.bk
+sed '2 a"register-multi-endpoints",' ${BUILD_DIR}/plugins.json.bk > ${BUILD_DIR}/plugins.json
+rm ${BUILD_DIR}/plugins.json.bk
+
 NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
 
 # Remove the node_modules and bower_components folders - only needed for build
