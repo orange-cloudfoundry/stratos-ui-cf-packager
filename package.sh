@@ -12,8 +12,8 @@ fi
 
 mkdir cache
 mkdir build
-
+CWD="$(pwd)"
 npm_lcation="$(which npm)"
-NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh ./build ./cache
+NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$CWD/build" "$CWD/cache"
 
 zip -r stratos-ui-packaged ./build/*
