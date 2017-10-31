@@ -16,4 +16,5 @@ CWD="$(pwd)"
 npm_lcation="$(which npm)"
 NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$CWD/build" "$CWD/cache"
 
+cd "$CWD"
 zip -r stratos-ui-packaged ./build/*
