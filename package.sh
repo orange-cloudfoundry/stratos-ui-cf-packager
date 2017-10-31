@@ -13,6 +13,6 @@ fi
 mkdir cache
 mkdir build
 
-stratos-ui/deploy/cloud-foundry/build.sh ./build ./cache
+NODE_HOME="/home/travis/.nvm/versions/node/v7.4.0/bin" stratos-ui/deploy/cloud-foundry/build.sh ./build ./cache
 
 zip -r stratos-ui-packaged ./build/*
