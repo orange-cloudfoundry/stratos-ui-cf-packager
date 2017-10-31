@@ -13,6 +13,8 @@ fi
 mkdir cache
 mkdir build
 
+which npm
+
 NODE_HOME="$(ls -d /home/travis/.nvm/versions/node/* | head -n 1)" stratos-ui/deploy/cloud-foundry/build.sh ./build ./cache
 
 zip -r stratos-ui-packaged ./build/*
