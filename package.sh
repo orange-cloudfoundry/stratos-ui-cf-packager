@@ -26,6 +26,8 @@ if [ -d "$BUILD_DIR/bower_components" ]; then
   rm -rf $BUILD_DIR/bower_components
 fi
 
+'echo "web: ./deploy/cloud-foundry/start.sh" > $BUILD_DIR'
+
 ls -lah "$BUILD_DIR"
 cd $BUILD_DIR
 zip -r "$CWD/stratos-ui-packaged.zip" ./*
