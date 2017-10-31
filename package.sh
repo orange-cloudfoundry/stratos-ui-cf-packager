@@ -13,7 +13,8 @@ fi
 mkdir cache
 CWD="$(pwd)"
 npm_lcation="$(which npm)"
-NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$CWD/stratos-ui" "$CWD/cache"
+BUILD_DIR="$CWD/stratos-ui"
+NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
 
 # Remove the node_modules and bower_components folders - only needed for build
 if [ -d "$BUILD_DIR/node_modules" ]; then
@@ -25,5 +26,5 @@ if [ -d "$BUILD_DIR/bower_components" ]; then
 fi
 
 cd "$CWD"
-ls -lah ./stratos-ui
+ls -lah "$BUILD_DIR"
 zip -r stratos-ui-packaged ./stratos-ui/*
