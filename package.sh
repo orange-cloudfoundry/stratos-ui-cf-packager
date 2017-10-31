@@ -26,7 +26,7 @@ if [ -d "$BUILD_DIR/bower_components" ]; then
   rm -rf $BUILD_DIR/bower_components
 fi
 
-'echo "web: ./deploy/cloud-foundry/start.sh" > $BUILD_DIR'
+echo "web: ./deploy/cloud-foundry/start.sh" > $BUILD_DIR/Procfile
 
 ls -lah "$BUILD_DIR"
 cd $BUILD_DIR
