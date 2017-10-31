@@ -25,6 +25,7 @@ if [ -d "$BUILD_DIR/bower_components" ]; then
   rm -rf $BUILD_DIR/bower_components
 fi
 
-cd "$CWD"
 ls -lah "$BUILD_DIR"
-zip -r stratos-ui-packaged ./stratos-ui/*
+cd $BUILD_DIR
+zip -r "$CWD/stratos-ui-packaged.zip" ./*
+cd "$CWD"
