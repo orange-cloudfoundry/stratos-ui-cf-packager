@@ -1,8 +1,18 @@
-
 language: go
 go:
 - 1.9
 install:
-- "curl https://glide.sh/get | sh"
-
+- wget "https://github.com/Masterminds/glide/releases/download/v0.10.3/glide-v0.13.0-linux-amd64.tar.gz"
+- mkdir -p $HOME/bin
+- tar -vxz -C $HOME/bin --strip=1 -f glide-v0.13.0-linux-amd64.tar.gz
+- export PATH="$HOME/bin:$PATH"
 script: ./package.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: OYiENSsb38hPRLewwnv+Y3UGHkrlYKsZ5COBz+fFfwQ5wg5qOj7mFmmDKI1KsdjnS6eRBkElB59mGe/y59vddoPTWlWoVtvy3B73RgWVHTVUAfEECtZLPzzpfg8/m+pKPOEKbgZBcRaPDmbQc9bXodG7pJFo6/U/+jnI6EzCkp92cZpodN80NZHY/nDg1KElHalbvNnVtsgJroniA70IU0x30aVYGpOm28aWsENlGFLqF/OQjEomK0rVHo7J5rykGYl7v6fbub5eDlM9ZyfoFXCfYGSdF01mZ1Q5rJW5ebxqdh03wMv/XFg0DkPtF6u9lEZeHQOy2Sek1ihU+QWlbwR/HWlKyVyRDbHOy2ICr+QoZQH4gKZydrkgVqbw+xhBvfA0HjWo497F2qb4QO387J7C9iJI9jFcZSLL/osD4Ba8KLALz/xWq2mwhEIfR7QJPG3yBh4JpHqckptZYl7wRCLCxqHLtAe3w06rT00l4LdqktIhURHN7Xe20Ld6hem32IWcVUbxudzneXUpUoCf8ottLuQqxNgXuTGvT5vp8+Lx9KEtl378aiiU4seqtjgfIVI7v647SaU7OqoMfdq+vXk42Oy3HkYGNdSFtoYPfNC5zsJ5p9wTiGCQ0fgjWTLOwv1V9UO5jSZsL4zg4Rr/emhSVp9R8X89Olp52GlWp1E=
+  file: stratos-ui-packaged.zip
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
