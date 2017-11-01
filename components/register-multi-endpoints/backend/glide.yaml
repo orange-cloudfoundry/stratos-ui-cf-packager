@@ -1,9 +1,7 @@
 package: github.com/SUSE/stratos-ui/components/register-multi-endpoints/backend
 import:
 - package: github.com/Sirupsen/logrus
-  repo: git@github.com:/sirupsen/logrus
-  vcs: git
-  version: master
+  version: ^0.11.5
 - package: github.com/cloudfoundry-community/gautocloud
   subpackages:
   - connectors/databases/client/mysql
@@ -12,3 +10,4 @@ import:
   - connectors/generic
   - loader
 - package: github.com/satori/go.uuid
+  version: ^1.1.0
