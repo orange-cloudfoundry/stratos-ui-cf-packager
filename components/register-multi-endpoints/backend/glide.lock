@@ -1,5 +1,5 @@
 hash: 5ff16258a2208ced895cc53b55c0fa1d58b5cb79e14012e79662a198d3ea85c0
-updated: 2017-11-01T02:11:21.581231561+01:00
+updated: 2017-11-01T02:20:56.687911912+01:00
 imports:
 - name: github.com/azer/snakecase
   version: c818dddafb5c91bd13275f49b08e38a489cbef5f
@@ -22,8 +22,6 @@ imports:
   version: f920e9562d5f951cbf11785728f67258c38a10d0
 - name: github.com/fsnotify/fsnotify
   version: 4da3e2cfbabc9f751898f250b49f2439785783a1
-- name: github.com/go-sql-driver/mysql
-  version: fade21009797158e7b79e04c340118a9220c6f9e
 - name: github.com/golang/mock
   version: 61503c535dc549c7ffc1ff07902345658a0f20a2
   subpackages:
@@ -54,10 +52,6 @@ imports:
   subpackages:
   - color
   - log
-- name: github.com/lib/pq
-  version: b609790bd85edf8e9ab7e0f8912750a786177bcf
-  subpackages:
-  - oid
 - name: github.com/magiconair/properties
   version: 49d762b9817ba1c2e9d0c69183c2b4a8b8f1d934
 - name: github.com/mattn/go-colorable
@@ -95,10 +89,6 @@ imports:
   subpackages:
   - acme
   - acme/autocert
-- name: golang.org/x/net
-  version: c73622c77280266305273cb545f54516ced95b93
-  subpackages:
-  - context
 - name: golang.org/x/sys
   version: 95c6576299259db960f6c5b9b69ea52422860fce
   subpackages:
