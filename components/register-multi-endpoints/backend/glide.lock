@@ -45,13 +45,6 @@ imports:
   - json/token
 - name: github.com/kat-co/vala
   version: 42e1d8b61f12b4fcadea0c062782e466924a3aaa
-- name: github.com/labstack/echo
-  version: b28538b2e3f5446fe6e0e47ee34cd74b662ca2ab
-- name: github.com/labstack/gommon
-  version: 57409ada9da0f2afad6664c49502f8c50fbd8476
-  subpackages:
-  - color
-  - log
 - name: github.com/magiconair/properties
   version: 49d762b9817ba1c2e9d0c69183c2b4a8b8f1d934
 - name: github.com/mattn/go-colorable
