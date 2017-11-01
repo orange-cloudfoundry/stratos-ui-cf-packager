@@ -63,10 +63,14 @@ type Endpoint struct {
 }
 type CFMultipleEndpoints struct {
 	portalProxy interfaces.PortalProxy
+	logEntry    *log.Entry
 }
 
 func Init(portalProxy interfaces.PortalProxy) (interfaces.StratosPlugin, error) {
-	return &CFMultipleEndpoints{portalProxy: portalProxy}, nil
+	return &CFMultipleEndpoints{
+		portalProxy: portalProxy,
+		logEntry:    log.WithField("plugin", "register-multi-endpoints"),
+	}, nil
 }
 
 func (ch *CFMultipleEndpoints) GetMiddlewarePlugin() (interfaces.MiddlewarePlugin, error) {
@@ -108,14 +112,13 @@ func (ch *CFMultipleEndpoints) Init() error {
 	if len(conf.Endpoints) == 0 {
 		return nil
 	}
-	entry := log.WithField("plugin", "register-multi-endpoints")
 	for _, endpoint := range conf.Endpoints {
-		entry.Debugf("Creating or updating endpoint %s ...", endpoint.Name)
+		ch.logEntry.Debugf("Creating endpoint %s ...", endpoint.Name)
 		err = ch.addCnsi(cnsiRepo, endpoint)
 		if err != nil {
-			entry.Errorf("Could not register endpoint %s: %s", endpoint.Name, err.Error())
+			ch.logEntry.Errorf("Could not register endpoint %s: %s", endpoint.Name, err.Error())
 		}
-		entry.Debugf("Finished creating endpoint %s.", endpoint.Name)
+		ch.logEntry.Debugf("Finished creating endpoint %s.", endpoint.Name)
 	}
 	return nil
 }
@@ -126,10 +129,9 @@ func (ch *CFMultipleEndpoints) addCnsi(cnsiRepo cnsis.Repository, endpoint Endpo
 	if endpoint.APIEndpoint == "" {
 		return fmt.Errorf("Missing endpoint url for %s.", endpoint.Name)
 	}
-
-	actualCnsi, err := cnsiRepo.FindByAPIEndpoint(endpoint.APIEndpoint)
+	_, err := cnsiRepo.FindByAPIEndpoint(endpoint.APIEndpoint)
 	if err == nil {
-		cnsiRepo.Delete(actualCnsi.GUID)
+		ch.logEntry.Infof("Skipping creating endpoint %s, it already exists.", endpoint.Name)
 		return nil
 	}
 
