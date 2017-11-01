@@ -17,10 +17,12 @@ npm_lcation="$(which npm)"
 BUILD_DIR="$CWD/stratos-ui"
 
 # Add multi-endpoints plugin
-mv components/register-multi-endpoints ${BUILD_DIR}/components
+mv components/register-multi-endpoints ${BUILD_DIR}/components/
 mv ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.json.bk
 sed '2 a"register-multi-endpoints",' ${BUILD_DIR}/plugins.json.bk > ${BUILD_DIR}/plugins.json
 rm ${BUILD_DIR}/plugins.json.bk
+ls -lah ${BUILD_DIR}/components
+ls -lah ${BUILD_DIR}/components/register-multi-endpoints
 
 NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
 
