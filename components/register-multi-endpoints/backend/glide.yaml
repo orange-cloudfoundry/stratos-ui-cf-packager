@@ -1,6 +1,11 @@
 package: github.com/SUSE/stratos-ui/components/register-multi-endpoints/backend
 ignore:
 - github.com/SUSE/stratos-ui
+- github.com/go-sql-driver/mysql
+- github.com/lib/pq
+- golang.org/x/net
+- golang.org/x/sys
+- github.com/golang/mock
 import:
 - package: github.com/Sirupsen/logrus
   version: ^0.11.5
