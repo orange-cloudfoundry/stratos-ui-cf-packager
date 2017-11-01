@@ -1,4 +1,6 @@
 package: github.com/SUSE/stratos-ui/components/register-multi-endpoints/backend
+ignore:
+- github.com/SUSE/stratos-ui
 import:
 - package: github.com/Sirupsen/logrus
   version: ^0.11.5
