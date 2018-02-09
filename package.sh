@@ -2,14 +2,13 @@
 
 set -ex
 
-git clone https://github.com/SUSE/stratos-ui.git
+git clone https://github.com/cloudfoundry-incubator/stratos.git
 
-# wating next release
-#if [ "x$TRAVIS_TAG" != "x" ]; then
-#	cd stratos-ui
-#	git checkout $TRAVIS_TAG
-#	cd ..
-#fi
+if [ "x$TRAVIS_TAG" != "x" ]; then
+	cd stratos-ui
+	git checkout $TRAVIS_TAG
+	cd ..
+fi
 
 mkdir cache
 CWD="$(pwd)"
