@@ -2,7 +2,7 @@
 
 set -ex
 
-git clone https://github.com/cloudfoundry-incubator/stratos.git
+git clone https://github.com/cloudfoundry-incubator/stratos.git stratos-ui/
 
 if [ "x$TRAVIS_TAG" != "x" ]; then
 	cd stratos-ui
