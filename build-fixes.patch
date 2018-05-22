@@ -1,0 +1,50 @@
+diff --git a/build/bk-build-utils.js b/build/bk-build-utils.js
+index 304a701..301e07c 100644
+--- a/build/bk-build-utils.js
++++ b/build/bk-build-utils.js
+@@ -8,6 +8,7 @@
+   var fs = require('fs-extra');
+   var _ = require('lodash');
+   var path = require('path');
++    var log = require('fancy-log');
+ 
+   var prepareBuild = require('./bk-prepare-build');
+   var nodePackageFile = require('../package.json');
+@@ -107,6 +108,7 @@
+     }
+     args = args.concat(['-buildmode=plugin', '-o', pluginName + '.so']);
+     args = args.concat(goFiles);
++      log('Spawning: go "' + args.join('" "') + '", in CWD [' + pluginPath + '] with GOPATH: [' + env.GOPATH + ']');
+     return spawnProcess('go', args, pluginPath, env);
+   }
+ 
+diff --git a/build/bk-build.js b/build/bk-build.js
+index c387dac..99c37a4 100644
+--- a/build/bk-build.js
++++ b/build/bk-build.js
+@@ -342,6 +342,8 @@
+   });
+ 
+   gulp.task('cf-build-backend', function () {
++    // Doesn't perform a `go build -i` buiild
++    prepareBuild.setNoGoInstall(true);
+ 
+     return runSequence(
+       'init-build',
+diff --git a/deploy/cloud-foundry/build.sh b/deploy/cloud-foundry/build.sh
+index 0a371f4..da3564f 100755
+--- a/deploy/cloud-foundry/build.sh
++++ b/deploy/cloud-foundry/build.sh
+@@ -13,6 +13,12 @@ BOWER_PATH=${NODE_HOME}/bin
+ 
+ export STRATOS_TEMP=$(mktemp -d)
+ 
++function exit_trap() {
++    echo "DEBUG: removing '$STRATOS_TEMP' directory."
++    rm -rf "$STRATOS_TEMP"
++}
++trap exit_trap EXIT
++
+ # Copy the config file
+ cp ${CF_DIR}/config.properties ${TOP_LEVEL}
+ 

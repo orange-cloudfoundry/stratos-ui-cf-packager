@@ -2,7 +2,8 @@
 
 set -ex
 
-git clone https://github.com/cloudfoundry-incubator/stratos.git stratos-ui/
+git clone https://github.com/cloudfoundry-incubator/stratos.git stratos-ui \
+    || true
 
 if [ "x$TRAVIS_TAG" != "x" ]; then
 	cd stratos-ui
@@ -10,18 +11,43 @@ if [ "x$TRAVIS_TAG" != "x" ]; then
 	cd ..
 fi
 
-mkdir cache
+function exit_trap() {
+    rm -rf /tmp/nodejs.tar.gz /tmp/node6.11.3 # See: install_nodejs.sh
+    rm -rf /tmp/glide # See: install_glide.sh
+}
+trap exit_trap EXIT
+
+if ! which npm > /dev/null; then
+    source ./install_nodejs.sh
+    export PATH=$NODE_HOME/bin:$PATH
+else
+    npm_lcation=$(which npm)
+    export NODE_HOME=${npm_lcation%%/bin/npm}
+fi
+
+if ! which glide > /dev/null; then
+    source ./install_glide.sh
+    export PATH=$GlideDir:$PATH
+fi
+
+mkdir -p cache
 CWD="$(pwd)"
-npm_lcation="$(which npm)"
 BUILD_DIR="$CWD/stratos-ui"
 
 # Add multi-endpoints plugin
-mv components/register-multi-endpoints ${BUILD_DIR}/components/
-mv ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.json.bk
-sed '2 a"register-multi-endpoints",' ${BUILD_DIR}/plugins.json.bk > ${BUILD_DIR}/plugins.json
-rm ${BUILD_DIR}/plugins.json.bk
+cp -Rp components/register-multi-endpoints ${BUILD_DIR}/components/
+if [ ! -f ${BUILD_DIR}/plugins.orig.json ]; then
+    cp ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.orig.json
+fi
+python append-to-enabled-plugin.py ${BUILD_DIR}/plugins.orig.json "register-multi-endpoints" \
+    | python -m json.tool \
+    > ${BUILD_DIR}/plugins.json
 
-NODE_HOME="${npm_lcation%%/bin/npm}" stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
+# Patch the build system
+patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
+    || true
+
+bash -x stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
 
 # Remove the node_modules and bower_components folders - only needed for build
 if [ -d "$BUILD_DIR/node_modules" ]; then
