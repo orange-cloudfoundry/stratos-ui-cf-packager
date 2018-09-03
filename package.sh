@@ -35,13 +35,13 @@ CWD="$(pwd)"
 BUILD_DIR="$CWD/stratos-ui"
 
 # Add multi-endpoints plugin
-cp -Rp components/register-multi-endpoints ${BUILD_DIR}/components/
-if [ ! -f ${BUILD_DIR}/plugins.orig.json ]; then
-    cp ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.orig.json
-fi
-python append-to-enabled-plugin.py ${BUILD_DIR}/plugins.orig.json "register-multi-endpoints" \
-    | python -m json.tool \
-    > ${BUILD_DIR}/plugins.json
+#cp -Rp components/register-multi-endpoints ${BUILD_DIR}/components/
+#if [ ! -f ${BUILD_DIR}/plugins.orig.json ]; then
+#    cp ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.orig.json
+#fi
+#python append-to-enabled-plugin.py ${BUILD_DIR}/plugins.orig.json "register-multi-endpoints" \
+#    | python -m json.tool \
+#    > ${BUILD_DIR}/plugins.json
 
 # Patch the build system
 patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
