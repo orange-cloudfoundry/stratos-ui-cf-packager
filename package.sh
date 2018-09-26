@@ -5,10 +5,10 @@ set -ex
 git clone https://github.com/cloudfoundry-incubator/stratos.git stratos-ui \
     || true
 
-if [ "x$TRAVIS_TAG" != "x" ]; then
-	cd stratos-ui
-	git checkout $TRAVIS_TAG
-	cd ..
+if [[ -n $TRAVIS_TAG ]]; then
+	pushd stratos-ui
+	git checkout "$TRAVIS_TAG"
+	popd
 fi
 
 function exit_trap() {
