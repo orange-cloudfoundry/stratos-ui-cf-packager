@@ -36,7 +36,7 @@ applications:
 
 ## Usage
 
-Golang is required, and version 1.9 is recommended as this is the cersion used
+Golang is required, and version 1.9 is recommended as this is the version used
 by the Stratos build system.
 
 When you want to build the `1.1.0` tag in
@@ -44,5 +44,5 @@ When you want to build the `1.1.0` tag in
 run this command:
 
 ```
-TRAVIS_TAG=1.1.0 ./package.sh
+TRAVIS_TAG=2.1.1 ./package.sh
 ```

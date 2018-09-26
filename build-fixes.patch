@@ -1,41 +1,40 @@
-diff --git a/build/bk-build-utils.js b/build/bk-build-utils.js
-index 304a701..301e07c 100644
---- a/build/bk-build-utils.js
-+++ b/build/bk-build-utils.js
+diff --git a/build/legacy/bk-build-utils.js b/build/legacy/bk-build-utils.js
+index d7f71fff0..e2af87395 100644
+--- a/build/legacy/bk-build-utils.js
++++ b/build/legacy/bk-build-utils.js
 @@ -8,6 +8,7 @@
    var fs = require('fs-extra');
    var _ = require('lodash');
    var path = require('path');
-+    var log = require('fancy-log');
++  var log = require('fancy-log');
  
    var prepareBuild = require('./bk-prepare-build');
    var nodePackageFile = require('../package.json');
-@@ -107,6 +108,7 @@
-     }
-     args = args.concat(['-buildmode=plugin', '-o', pluginName + '.so']);
-     args = args.concat(goFiles);
-+      log('Spawning: go "' + args.join('" "') + '", in CWD [' + pluginPath + '] with GOPATH: [' + env.GOPATH + ']');
-     return spawnProcess('go', args, pluginPath, env);
+@@ -101,6 +102,7 @@
+         args.push('-ldflags');
+         args.push('-X=main.appVersion=' + version);
+       }
++      log('Spawning: go "' + args.join('" "') + '", in CWD [' + srcPath + '] with GOPATH: [' + env.GOPATH + ']');
+       return spawnProcess('go', args, srcPath, env);
+     });
    }
+diff --git a/build/legacy/bk-build.js b/build/legacy/bk-build.js
+index ceb043f91..d2176c932 100644
+--- a/build/legacy/bk-build.js
++++ b/build/legacy/bk-build.js
+@@ -236,6 +236,7 @@
+   ));
  
-diff --git a/build/bk-build.js b/build/bk-build.js
-index c387dac..99c37a4 100644
---- a/build/bk-build.js
-+++ b/build/bk-build.js
-@@ -342,6 +342,8 @@
-   });
- 
-   gulp.task('cf-build-backend', function () {
-+    // Doesn't perform a `go build -i` buiild
-+    prepareBuild.setNoGoInstall(true);
- 
-     return runSequence(
-       'init-build',
+   gulp.task('cf-build-backend', gulp.series(
++    'set-no-glide-install', // Doesn't perform a `go build -i` buiild
+     'init-build',
+     'get-plugins-data',
+     'copy-artefacts',
 diff --git a/deploy/cloud-foundry/build.sh b/deploy/cloud-foundry/build.sh
-index 0a371f4..da3564f 100755
+index c4add91fc..dceaeb8d8 100755
 --- a/deploy/cloud-foundry/build.sh
 +++ b/deploy/cloud-foundry/build.sh
-@@ -13,6 +13,12 @@ BOWER_PATH=${NODE_HOME}/bin
+@@ -25,6 +25,12 @@ TOP_LEVEL=${CF_DIR}/../../
  
  export STRATOS_TEMP=$(mktemp -d)
  

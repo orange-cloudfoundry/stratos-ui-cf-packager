@@ -12,7 +12,7 @@ if [[ -n $TRAVIS_TAG ]]; then
 fi
 
 function exit_trap() {
-    rm -rf /tmp/nodejs.tar.gz /tmp/node6.11.3 # See: install_nodejs.sh
+    rm -rf /tmp/node${NODE_VERSION}.tar.gz /tmp/node${NODE_VERSION} # See: install_nodejs.sh
     rm -rf /tmp/glide # See: install_glide.sh
 }
 trap exit_trap EXIT
