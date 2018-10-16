@@ -53,6 +53,10 @@ BUILD_DIR="$CWD/stratos-ui"
 patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
     || true
 
+# Fix the "authenticity of host can't be established" error in travis build
+ssh-keyscan "bitbucket.org" >> ~/.ssh/known_hosts
+
+# Actually build Stratos
 bash -x stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
 
 # Remove the node_modules and bower_components folders - only needed for build
