@@ -14,6 +14,7 @@ fi
 function exit_trap() {
     rm -rf /tmp/node${NODE_VERSION}.tar.gz /tmp/node${NODE_VERSION} # See: install_nodejs.sh
     rm -rf /tmp/glide # See: install_glide.sh
+    rm -rf /tmp/dep0.5.0 /tmp/dep # See: install_dep.sh
 }
 trap exit_trap EXIT
 
@@ -28,6 +29,11 @@ fi
 if ! which glide > /dev/null; then
     source ./install_glide.sh
     export PATH=$GlideDir:$PATH
+fi
+
+if ! which dep > /dev/null; then
+    source ./install_dep.sh
+    export PATH=$DepInstallDir:$PATH
 fi
 
 mkdir -p cache
