@@ -12,9 +12,16 @@ if [[ -n $TRAVIS_TAG ]]; then
 fi
 
 function exit_trap() {
-    rm -rf /tmp/node${NODE_VERSION}.tar.gz /tmp/node${NODE_VERSION} # See: install_nodejs.sh
-    rm -rf /tmp/glide # See: install_glide.sh
-    rm -rf /tmp/dep0.5.0 /tmp/dep # See: install_dep.sh
+    # See: install_nodejs.sh
+    NODE_VERSION="8.9.4"
+    rm -rf /tmp/node${NODE_VERSION}.tar.gz /tmp/node${NODE_VERSION}
+
+    # See: install_glide.sh
+    rm -rf /tmp/glide
+
+    # See: install_dep.sh
+    DEP_VERSION="0.5.0"
+    rm -rf /tmp/dep${DEP_VERSION} /tmp/dep
 }
 trap exit_trap EXIT
 
@@ -22,8 +29,8 @@ if ! which npm > /dev/null; then
     source ./install_nodejs.sh
     export PATH=$NODE_HOME/bin:$PATH
 else
-    npm_lcation=$(which npm)
-    export NODE_HOME=${npm_lcation%%/bin/npm}
+    npm_location=$(which npm)
+    export NODE_HOME=${npm_location%%/bin/npm}
 fi
 
 if ! which glide > /dev/null; then
