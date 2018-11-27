@@ -67,6 +67,7 @@ ssh-keyscan "bitbucket.org" >> ~/.ssh/known_hosts
 cd stratos-ui
 npm install
 npm run prebuild-ui
+rm -Rf ./dist
 
 # Actually build Stratos
 bash -x deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
