@@ -63,6 +63,10 @@ patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
 # Fix the "authenticity of host can't be established" error in travis build
 ssh-keyscan "bitbucket.org" >> ~/.ssh/known_hosts
 
+# prebuild ui
+npm install
+npm run prebuild-ui
+
 # Actually build Stratos
 bash -x stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
 
