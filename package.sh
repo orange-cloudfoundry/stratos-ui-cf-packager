@@ -64,12 +64,13 @@ patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
 ssh-keyscan "bitbucket.org" >> ~/.ssh/known_hosts
 
 # prebuild ui
+cd stratos-ui
 npm install
 npm run prebuild-ui
 
 # Actually build Stratos
-bash -x stratos-ui/deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
-
+bash -x deploy/cloud-foundry/build.sh "$BUILD_DIR" "$CWD/cache"
+cd "$CWD"
 # Remove the node_modules and bower_components folders - only needed for build
 if [ -d "$BUILD_DIR/node_modules" ]; then
   rm -rf $BUILD_DIR/node_modules
