@@ -15,13 +15,6 @@ function exit_trap() {
     # See: install_nodejs.sh
     NODE_VERSION="8.9.4"
     rm -rf /tmp/node${NODE_VERSION}.tar.gz /tmp/node${NODE_VERSION}
-
-    # See: install_glide.sh
-    rm -rf /tmp/glide
-
-    # See: install_dep.sh
-    DEP_VERSION="0.5.0"
-    rm -rf /tmp/dep${DEP_VERSION} /tmp/dep
 }
 trap exit_trap EXIT
 
@@ -33,28 +26,9 @@ else
     export NODE_HOME=${npm_location%%/bin/npm}
 fi
 
-if ! which glide > /dev/null; then
-    source ./install_glide.sh
-    export PATH=$GlideDir:$PATH
-fi
-
-if ! which dep > /dev/null; then
-    source ./install_dep.sh
-    export PATH=$DepInstallDir:$PATH
-fi
-
 mkdir -p cache
 CWD="$(pwd)"
 BUILD_DIR="$CWD/stratos-ui"
-
-# Add multi-endpoints plugin
-#cp -Rp components/register-multi-endpoints ${BUILD_DIR}/components/
-#if [ ! -f ${BUILD_DIR}/plugins.orig.json ]; then
-#    cp ${BUILD_DIR}/plugins.json ${BUILD_DIR}/plugins.orig.json
-#fi
-#python append-to-enabled-plugin.py ${BUILD_DIR}/plugins.orig.json "register-multi-endpoints" \
-#    | python -m json.tool \
-#    > ${BUILD_DIR}/plugins.json
 
 # Patch the build system
 patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
