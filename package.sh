@@ -8,12 +8,13 @@ git clone https://github.com/cloudfoundry-incubator/stratos.git stratos-ui \
 if [[ -n $TRAVIS_TAG ]]; then
 	pushd stratos-ui
 	git checkout "$TRAVIS_TAG"
+    export stratos_version="$TRAVIS_TAG"
 	popd
 fi
 
 function exit_trap() {
     # See: install_nodejs.sh
-    NODE_VERSION="8.9.4"
+    NODE_VERSION="8.11.2"
     rm -rf /tmp/node${NODE_VERSION}.tar.gz /tmp/node${NODE_VERSION}
 }
 trap exit_trap EXIT
@@ -31,8 +32,8 @@ CWD="$(pwd)"
 BUILD_DIR="$CWD/stratos-ui"
 
 # Patch the build system
-patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch \
-    || true
+# THIS BECOMING USELESS CAUSE OF THE REWRITE OF bk-build.sh (inside now build/bk-build.sh)
+# patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch || true
 
 # Fix the "authenticity of host can't be established" error in travis build
 ssh-keyscan "bitbucket.org" >> ~/.ssh/known_hosts
