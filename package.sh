@@ -31,10 +31,6 @@ mkdir -p cache
 CWD="$(pwd)"
 BUILD_DIR="$CWD/stratos-ui"
 
-# Patch the build system
-# THIS BECOMING USELESS CAUSE OF THE REWRITE OF bk-build.sh (inside now build/bk-build.sh)
-# patch -Ns -d $BUILD_DIR -p1 < build-fixes.patch || true
-
 # Fix the "authenticity of host can't be established" error in travis build
 ssh-keyscan "bitbucket.org" >> ~/.ssh/known_hosts
 
