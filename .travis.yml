@@ -1,6 +1,8 @@
 language: go
 go:
 - "1.14"
+before_install:
+- rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install 12.13.0
 install:
 - export GO111MODULE=on
 script: ./package.sh
