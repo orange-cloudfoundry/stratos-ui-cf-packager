@@ -1,5 +1,7 @@
 # Stratos UI pre-packager
 
+This project is archived, see [orange-cloudfoundry/cf-stratos-ui-packager](https://github.com/orange-cloudfoundry/cf-stratos-ui-packager).
+
 This projects helps in pre-building the
 [Stratos](https://github.com/cloudfoundry-incubator/stratos) web application
 so that it can be deployed faster in Cloud Foundry, or be run offline.
